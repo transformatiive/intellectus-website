@@ -1,6 +1,6 @@
 // Backoffice — login, dashboard, courses, enrollments, payments, reports, CMS
 import React from 'react';
-import { COURSES, ENROLLMENTS, Icon, fmtEUR, HERO_IMG_ALT } from './data.jsx';
+import { COURSES, ENROLLMENTS, AREAS, Icon, fmtEUR, HERO_IMG_ALT } from './data.jsx';
 import logoUrl from './logo.svg';
 
 const BoSidebar = ({ active, onNav }) => (
