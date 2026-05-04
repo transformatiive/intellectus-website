@@ -92,6 +92,7 @@ const Catalog = ({ onNav, onAdd }) => {
 
 const CourseDetail = ({ courseId, onNav, onAdd }) => {
   const c = COURSES.find(x => x.id === courseId) || COURSES[0];
+  const [openModule, setOpenModule] = React.useState(null);
   return (
     <div className="itx-page">
       <div className="scroll">
@@ -120,20 +121,39 @@ const CourseDetail = ({ courseId, onNav, onAdd }) => {
             </div>
             <h3 style={{ fontFamily: "var(--display)", fontSize: 24, fontWeight: 600, margin: "32px 0 12px" }}>Programa</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {(c.modules || []).map((m, i) => (
-                <div key={i} className="itx-card" style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                  <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <span style={{ fontFamily: "var(--display)", fontSize: 12, fontWeight: 700, color: "var(--primary)" }}>{String(i + 1).padStart(2, "0")}</span>
+              {(c.modules || []).map((m, i) => {
+                const isOpen = openModule === i;
+                return (
+                  <div key={i} className="itx-card" style={{ overflow: "hidden", cursor: "pointer" }} onClick={() => setOpenModule(isOpen ? null : i)}>
+                    <div style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                      <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: 8, background: isOpen ? "var(--primary)" : "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "background 0.2s" }}>
+                          <span style={{ fontFamily: "var(--display)", fontSize: 12, fontWeight: 700, color: isOpen ? "white" : "var(--primary)" }}>{String(i + 1).padStart(2, "0")}</span>
+                        </div>
+                        <div>
+                          <b style={{ fontFamily: "var(--display)", fontSize: 16, fontWeight: 600, color: "var(--ink)" }}>Módulo {i + 1} · {m.title}</b>
+                          <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{m.hours}h de formação</div>
+                        </div>
+                      </div>
+                      <div style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease", flexShrink: 0 }}>
+                        <Icon name="arrowDown" size={14} color={isOpen ? "var(--primary)" : "var(--ink-3)"}/>
+                      </div>
                     </div>
-                    <div>
-                      <b style={{ fontFamily: "var(--display)", fontSize: 16, fontWeight: 600, color: "var(--ink)" }}>Módulo {i + 1} · {m.title}</b>
-                      <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{m.hours}h de formação</div>
-                    </div>
+                    {isOpen && (
+                      <div style={{ padding: "0 18px 16px 60px", borderTop: "1px solid var(--line-2)" }}>
+                        <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+                          {(m.topics || []).map((t, j) => (
+                            <li key={j} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--ink-2)", alignItems: "flex-start" }}>
+                              <Icon name="check" size={14} color="var(--primary)" style={{ flexShrink: 0, marginTop: 2 }}/>
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                  <Icon name="arrowDown" size={14} color="var(--ink-3)"/>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           {/* Sticky enroll card */}
