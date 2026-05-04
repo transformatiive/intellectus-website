@@ -15,7 +15,7 @@ const SiteNav = ({ active = "home", onNav }) => (
     <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
       <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Pesquisar"><Icon name="search" size={16} /></button>
       <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Carrinho"><Icon name="cart" size={16} /></button>
-      <button className="itx-btn itx-btn-secondary itx-btn-sm">Entrar</button>
+      <button className="itx-btn itx-btn-secondary itx-btn-sm" onClick={() => onNav?.("bo-login")}>Entrar</button>
       <button className="itx-btn itx-btn-primary itx-btn-sm">Inscrever</button>
     </div>
   </div>
