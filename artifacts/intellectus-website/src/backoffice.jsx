@@ -1,10 +1,11 @@
 // Backoffice — login, dashboard, courses, enrollments, payments, reports, CMS
 import React from 'react';
 import { COURSES, ENROLLMENTS, Icon, fmtEUR, HERO_IMG_ALT } from './data.jsx';
+import logoUrl from './logo.svg';
 
 const BoSidebar = ({ active, onNav }) => (
   <div className="bo-side">
-    <div className="logo">intellectus<b>.</b></div>
+    <div className="logo"><img src={logoUrl} alt="Intellectus" style={{ height: 26 }} /></div>
     <a className={active === "dash" ? "active" : ""} onClick={() => onNav("dash")}><Icon name="home" size={15}/>Dashboard</a>
     <div className="group-title">Conteúdo</div>
     <a className={active === "courses" ? "active" : ""} onClick={() => onNav("courses")}><Icon name="book" size={15}/>Cursos</a>
