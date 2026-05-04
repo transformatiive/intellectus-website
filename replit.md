@@ -25,3 +25,13 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Artifacts
+
+### Intellectus Website (`artifacts/intellectus-website`)
+- Imported from https://github.com/transformatiive/intellectus-website
+- Plain React + JSX (no TypeScript) using a custom state-based router
+- Own design system via `src/styles.css` and `src/tokens.css`
+- Entry point: `src/main.jsx` → `src/App.jsx`
+- Screens: home (A/B/C variants), catalog, course detail, checkout, about, blog, contact, student area, backoffice
+- Served at `/` on port 25744
