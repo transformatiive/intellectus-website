@@ -3,9 +3,9 @@ import React from 'react';
 import { COURSES, ENROLLMENTS, AREAS, FORMATS, Icon, fmtEUR, HERO_IMG_ALT } from './data.jsx';
 import logoUrl from './logo.svg';
 
-const BoSidebar = ({ active, onNav }) => (
+const BoSidebar = ({ active, onNav, onExit }) => (
   <div className="bo-side">
-    <div className="logo"><img src={logoUrl} alt="Intellectus" style={{ height: 26 }} /></div>
+    <div className="logo" style={{ cursor: "pointer" }} onClick={onExit} title="Voltar ao site"><img src={logoUrl} alt="Intellectus" style={{ height: 26 }} /></div>
     <a className={active === "dash" ? "active" : ""} onClick={() => onNav("dash")}><Icon name="home" size={15}/>Dashboard</a>
     <div className="group-title">Conteúdo</div>
     <a className={active === "courses" ? "active" : ""} onClick={() => onNav("courses")}><Icon name="book" size={15}/>Cursos</a>
@@ -72,9 +72,9 @@ const BoLogin = ({ onLogin }) => {
   );
 };
 
-const BoDash = ({ onNav }) => (
+const BoDash = ({ onNav, onExit }) => (
   <div className="itx-page"><div className="bo-shell">
-    <BoSidebar active="dash" onNav={onNav}/>
+    <BoSidebar active="dash" onNav={onNav} onExit={onExit}/>
     <div className="bo-main">
       <BoTopbar title="Dashboard" action={<button className="itx-btn itx-btn-secondary itx-btn-sm"><Icon name="download" size={13}/>Exportar</button>}/>
       <div className="bo-content">
@@ -132,9 +132,9 @@ const BoDash = ({ onNav }) => (
   </div></div>
 );
 
-const BoCourses = ({ onNav, onEdit }) => (
+const BoCourses = ({ onNav, onEdit, onExit }) => (
   <div className="itx-page"><div className="bo-shell">
-    <BoSidebar active="courses" onNav={onNav}/>
+    <BoSidebar active="courses" onNav={onNav} onExit={onExit}/>
     <div className="bo-main">
       <BoTopbar title="Cursos" action={<button className="itx-btn itx-btn-primary itx-btn-sm" onClick={() => onEdit(COURSES[0])}><Icon name="plus" size={13}/>Novo curso</button>}/>
       <div className="bo-content">
@@ -161,7 +161,7 @@ const BoCourses = ({ onNav, onEdit }) => (
   </div></div>
 );
 
-const BoCourseEdit = ({ course, onNav, onClose }) => {
+const BoCourseEdit = ({ course, onNav, onClose, onExit }) => {
   const [c, setC] = React.useState(course);
   const [tab, setTab] = React.useState("info");
   const [saved, setSaved] = React.useState(false);
@@ -169,7 +169,7 @@ const BoCourseEdit = ({ course, onNav, onClose }) => {
   const save = () => { setSaved(true); setTimeout(() => setSaved(false), 1800); };
   return (
     <div className="itx-page"><div className="bo-shell">
-      <BoSidebar active="courses" onNav={onNav}/>
+      <BoSidebar active="courses" onNav={onNav} onExit={onExit}/>
       <div className="bo-main">
         <BoTopbar title="Editar curso" action={<><button className="itx-btn itx-btn-secondary itx-btn-sm" onClick={onClose}>Cancelar</button><button className="itx-btn itx-btn-primary itx-btn-sm" onClick={save}><Icon name="check" size={13}/>{saved ? "Guardado!" : "Guardar"}</button></>}/>
         <div className="bo-content">
@@ -256,7 +256,7 @@ const BoCourseEdit = ({ course, onNav, onClose }) => {
   );
 };
 
-const BoEnroll = ({ onNav }) => {
+const BoEnroll = ({ onNav, onExit }) => {
   const [items, setItems] = React.useState(ENROLLMENTS);
   const [filter, setFilter] = React.useState("Todas");
   const filtered = filter === "Todas" ? items : items.filter(e => e.status === filter);
@@ -264,7 +264,7 @@ const BoEnroll = ({ onNav }) => {
 
   return (
     <div className="itx-page"><div className="bo-shell">
-      <BoSidebar active="enroll" onNav={onNav}/>
+      <BoSidebar active="enroll" onNav={onNav} onExit={onExit}/>
       <div className="bo-main">
         <BoTopbar title="Inscrições" action={<button className="itx-btn itx-btn-secondary itx-btn-sm"><Icon name="download" size={13}/>Exportar CSV</button>}/>
         <div className="bo-content">
@@ -303,9 +303,9 @@ const BoEnroll = ({ onNav }) => {
   );
 };
 
-const BoPay = ({ onNav }) => (
+const BoPay = ({ onNav, onExit }) => (
   <div className="itx-page"><div className="bo-shell">
-    <BoSidebar active="pay" onNav={onNav}/>
+    <BoSidebar active="pay" onNav={onNav} onExit={onExit}/>
     <div className="bo-main">
       <BoTopbar title="Pagamentos" action={<button className="itx-btn itx-btn-secondary itx-btn-sm"><Icon name="download" size={13}/>Exportar SAF-T</button>}/>
       <div className="bo-content">
@@ -325,9 +325,9 @@ const BoPay = ({ onNav }) => (
   </div></div>
 );
 
-const BoReports = ({ onNav }) => (
+const BoReports = ({ onNav, onExit }) => (
   <div className="itx-page"><div className="bo-shell">
-    <BoSidebar active="reports" onNav={onNav}/>
+    <BoSidebar active="reports" onNav={onNav} onExit={onExit}/>
     <div className="bo-main">
       <BoTopbar title="Relatórios" action={<select className="itx-select itx-btn-sm" style={{ width: 160 }}><option>Abril 2026</option><option>Março 2026</option><option>Trimestre</option></select>}/>
       <div className="bo-content">
@@ -365,9 +365,9 @@ const BoReports = ({ onNav }) => (
   </div></div>
 );
 
-const BoCMS = ({ onNav }) => (
+const BoCMS = ({ onNav, onExit }) => (
   <div className="itx-page"><div className="bo-shell">
-    <BoSidebar active="cms" onNav={onNav}/>
+    <BoSidebar active="cms" onNav={onNav} onExit={onExit}/>
     <div className="bo-main">
       <BoTopbar title="Páginas (CMS)" action={<button className="itx-btn itx-btn-primary itx-btn-sm"><Icon name="plus" size={13}/>Nova página</button>}/>
       <div className="bo-content">
