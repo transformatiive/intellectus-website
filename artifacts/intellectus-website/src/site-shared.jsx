@@ -12,11 +12,10 @@ const SiteNav = ({ active = "home", onNav }) => (
       <a onClick={() => onNav?.("blog")} style={{ color: active === "blog" ? "var(--ink)" : undefined, fontWeight: active === "blog" ? 500 : 400 }}>Blog</a>
       <a onClick={() => onNav?.("contact")} style={{ color: active === "contact" ? "var(--ink)" : undefined, fontWeight: active === "contact" ? 500 : 400 }}>Contactos</a>
     </div>
-    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
       <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Pesquisar"><Icon name="search" size={16} /></button>
-      <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Carrinho"><Icon name="cart" size={16} /></button>
-      <button className="itx-btn itx-btn-secondary itx-btn-sm" onClick={() => onNav?.("bo-login")}>Entrar</button>
-      <button className="itx-btn itx-btn-primary itx-btn-sm">Inscrever</button>
+      <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Carrinho" onClick={() => onNav?.("bo-login")}><Icon name="cart" size={16} /></button>
+      <button className="itx-btn itx-btn-primary itx-btn-sm">Fale Connosco</button>
     </div>
   </div>
 );
