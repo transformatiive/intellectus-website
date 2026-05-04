@@ -1,0 +1,131 @@
+/* Intellectus — Design Tokens */
+:root {
+  /* Brand */
+  --i-primary: #2D5BFF;        /* azul vivo, educacional moderno */
+  --i-primary-700: #1E40CC;
+  --i-primary-100: #E5ECFF;
+  --i-accent: #FF6B35;          /* laranja energético para CTAs secundários */
+  --i-accent-100: #FFE8DD;
+  --i-success: #16A34A;
+  --i-warn: #F59E0B;
+  --i-danger: #DC2626;
+
+  /* Neutrals */
+  --i-ink: #0F1729;
+  --i-ink-2: #344256;
+  --i-ink-3: #5A6B85;
+  --i-ink-4: #8A99B0;
+  --i-line: #E4E8EF;
+  --i-line-2: #EFF2F7;
+  --i-bg: #FFFFFF;
+  --i-bg-soft: #F7F8FB;
+  --i-bg-tinted: #F0F4FF;
+
+  /* Type */
+  --i-font-sans: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --i-font-display: "Instrument Serif", "Source Serif Pro", Georgia, serif;
+
+  /* Radius / shadow */
+  --i-r-sm: 6px;
+  --i-r-md: 10px;
+  --i-r-lg: 16px;
+  --i-r-xl: 24px;
+  --i-shadow-sm: 0 1px 2px rgba(15,23,41,.06), 0 1px 1px rgba(15,23,41,.04);
+  --i-shadow-md: 0 6px 18px rgba(15,23,41,.08), 0 2px 4px rgba(15,23,41,.04);
+  --i-shadow-lg: 0 24px 48px rgba(15,23,41,.12), 0 4px 12px rgba(15,23,41,.06);
+}
+
+/* Reset light */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--i-font-sans);
+  color: var(--i-ink);
+  background: var(--i-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; }
+
+/* Utilities used across artboards */
+.i-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px; border-radius: 999px; border: 0;
+  background: var(--i-primary); color: white; font-weight: 600;
+  letter-spacing: -0.01em; transition: transform .12s ease, background .12s ease;
+}
+.i-btn:hover { background: var(--i-primary-700); transform: translateY(-1px); }
+.i-btn--ghost { background: transparent; color: var(--i-ink); border: 1px solid var(--i-line); }
+.i-btn--ghost:hover { background: var(--i-bg-soft); }
+.i-btn--accent { background: var(--i-accent); }
+.i-btn--accent:hover { background: #E55A28; }
+.i-btn--sm { padding: 8px 14px; font-size: 13px; }
+
+.i-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--i-bg-tinted); color: var(--i-primary-700);
+  font-size: 12px; font-weight: 600; letter-spacing: 0;
+}
+.i-chip--accent { background: var(--i-accent-100); color: #B14517; }
+.i-chip--mute { background: var(--i-bg-soft); color: var(--i-ink-2); }
+.i-chip--success { background: #DCFCE7; color: #15803D; }
+.i-chip--warn { background: #FEF3C7; color: #B45309; }
+.i-chip--danger { background: #FEE2E2; color: #B91C1C; }
+
+.i-card {
+  background: white; border: 1px solid var(--i-line);
+  border-radius: var(--i-r-lg);
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.i-card:hover { transform: translateY(-2px); box-shadow: var(--i-shadow-md); border-color: #D6DCE6; }
+
+.i-input {
+  width: 100%; padding: 12px 14px; border-radius: var(--i-r-md);
+  border: 1px solid var(--i-line); background: white; font: inherit;
+  color: var(--i-ink); transition: border-color .12s, box-shadow .12s;
+}
+.i-input:focus { outline: 0; border-color: var(--i-primary); box-shadow: 0 0 0 4px var(--i-primary-100); }
+
+.i-label { font-size: 13px; font-weight: 600; color: var(--i-ink-2); display: block; margin-bottom: 6px; }
+
+/* Topbar */
+.i-topbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; border-bottom: 1px solid var(--i-line); background: white; }
+.i-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; }
+.i-logo-mark {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--i-primary) 0%, #6B8AFF 100%);
+  display: grid; place-items: center; color: white; font-weight: 700;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.1);
+}
+.i-nav { display: flex; gap: 28px; }
+.i-nav a { color: var(--i-ink-2); text-decoration: none; font-weight: 500; font-size: 14px; }
+.i-nav a:hover { color: var(--i-ink); }
+
+/* Helpers */
+.h-display { font-family: var(--i-font-display); font-weight: 400; letter-spacing: -0.02em; line-height: 1.05; }
+.h-mono { font-family: ui-monospace, "JetBrains Mono", Menlo, monospace; }
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* Course image placeholders — colorful gradients we can swap later */
+.ph-grad-1 { background: linear-gradient(135deg, #2D5BFF, #6B8AFF, #B8C8FF); }
+.ph-grad-2 { background: linear-gradient(135deg, #FF6B35, #FFA06B, #FFD4BC); }
+.ph-grad-3 { background: linear-gradient(135deg, #16A34A, #4ADE80, #BBF7D0); }
+.ph-grad-4 { background: linear-gradient(135deg, #7C3AED, #A78BFA, #DDD6FE); }
+.ph-grad-5 { background: linear-gradient(135deg, #0F766E, #14B8A6, #99F6E4); }
+.ph-grad-6 { background: linear-gradient(135deg, #BE185D, #EC4899, #FBCFE8); }
+
+.ph-photo {
+  position: relative; overflow: hidden; color: white;
+  display: grid; place-items: center; font-size: 13px; font-weight: 600;
+  letter-spacing: 0.02em; text-transform: uppercase; opacity: .92;
+}
+.ph-photo::after {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0,.15), transparent 50%);
+}
