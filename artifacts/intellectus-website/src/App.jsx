@@ -25,14 +25,15 @@ export default function App({ initialScreen = 'home' } = {}) {
   if (screen === 'blog') return <Blog onNav={onNav} />;
   if (screen === 'contact') return <Contact onNav={onNav} />;
   if (screen === 'student') return <StudentArea onNav={onNav} />;
+  const boExit = () => onNav('home');
   if (screen === 'bo-login') return <BoLogin onLogin={() => setScreen('bo-dash')} />;
-  if (screen === 'bo-dash') return <BoDash onNav={boNav} />;
+  if (screen === 'bo-dash') return <BoDash onNav={boNav} onExit={boExit} />;
   if (screen === 'bo-courses') return editing
-    ? <BoCourseEdit course={editing} onNav={boNav} onClose={() => setEditing(null)} />
-    : <BoCourses onNav={boNav} onEdit={setEditing} />;
-  if (screen === 'bo-enroll') return <BoEnroll onNav={boNav} />;
-  if (screen === 'bo-pay') return <BoPay onNav={boNav} />;
-  if (screen === 'bo-reports') return <BoReports onNav={boNav} />;
-  if (screen === 'bo-cms') return <BoCMS onNav={boNav} />;
+    ? <BoCourseEdit course={editing} onNav={boNav} onClose={() => setEditing(null)} onExit={boExit} />
+    : <BoCourses onNav={boNav} onEdit={setEditing} onExit={boExit} />;
+  if (screen === 'bo-enroll') return <BoEnroll onNav={boNav} onExit={boExit} />;
+  if (screen === 'bo-pay') return <BoPay onNav={boNav} onExit={boExit} />;
+  if (screen === 'bo-reports') return <BoReports onNav={boNav} onExit={boExit} />;
+  if (screen === 'bo-cms') return <BoCMS onNav={boNav} onExit={boExit} />;
   return <HomeA onNav={onNav} onAdd={onAdd} />;
 }
