@@ -1,24 +1,39 @@
 // Public site — shared chrome (nav, footer) + course card variants
+import React from 'react';
 import { Icon, fmtEUR } from './data.jsx';
 import logoUrl from './logo.svg';
 
-const SiteNav = ({ active = "home", onNav }) => (
-  <div className="itx-nav">
-    <div className="itx-nav-logo"><img src={logoUrl} alt="Intellectus" style={{ height: 28 }} /></div>
-    <div className="itx-nav-links">
-      <a onClick={() => onNav?.("home")} style={{ color: active === "home" ? "var(--ink)" : undefined, fontWeight: active === "home" ? 500 : 400 }}>Início</a>
-      <a onClick={() => onNav?.("catalog")} style={{ color: active === "catalog" ? "var(--ink)" : undefined, fontWeight: active === "catalog" ? 500 : 400 }}>Cursos</a>
-      <a onClick={() => onNav?.("about")} style={{ color: active === "about" ? "var(--ink)" : undefined, fontWeight: active === "about" ? 500 : 400 }}>Sobre</a>
-      <a onClick={() => onNav?.("blog")} style={{ color: active === "blog" ? "var(--ink)" : undefined, fontWeight: active === "blog" ? 500 : 400 }}>Blog</a>
-      <a onClick={() => onNav?.("contact")} style={{ color: active === "contact" ? "var(--ink)" : undefined, fontWeight: active === "contact" ? 500 : 400 }}>Contactos</a>
+const SiteNav = ({ active = "home", onNav }) => {
+  const [open, setOpen] = React.useState(false);
+  const go = (screen) => { onNav?.(screen); setOpen(false); };
+  return (
+    <div className="itx-nav">
+      <div className="itx-nav-logo" style={{ cursor: "pointer" }} onClick={() => go("home")}>
+        <img src={logoUrl} alt="Intellectus" style={{ height: 28 }} />
+      </div>
+      <div className={`itx-nav-links${open ? " open" : ""}`}>
+        <a onClick={() => go("home")} style={{ color: active === "home" ? "var(--ink)" : undefined, fontWeight: active === "home" ? 500 : 400 }}>Início</a>
+        <a onClick={() => go("catalog")} style={{ color: active === "catalog" ? "var(--ink)" : undefined, fontWeight: active === "catalog" ? 500 : 400 }}>Cursos</a>
+        <a onClick={() => go("about")} style={{ color: active === "about" ? "var(--ink)" : undefined, fontWeight: active === "about" ? 500 : 400 }}>Sobre</a>
+        <a onClick={() => go("blog")} style={{ color: active === "blog" ? "var(--ink)" : undefined, fontWeight: active === "blog" ? 500 : 400 }}>Blog</a>
+        <a onClick={() => go("contact")} style={{ color: active === "contact" ? "var(--ink)" : undefined, fontWeight: active === "contact" ? 500 : 400 }}>Contactos</a>
+      </div>
+      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Pesquisar"><Icon name="search" size={16} /></button>
+        <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Carrinho" onClick={() => go("bo-login")}><Icon name="cart" size={16} /></button>
+        <button className="itx-btn itx-btn-primary itx-btn-sm itx-nav-cta" onClick={() => go("contact")}>Fale Connosco</button>
+        <button className="itx-nav-hamburger" onClick={() => setOpen(!open)} aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            {open
+              ? <><line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/></>
+              : <><line x1="2" y1="5" x2="16" y2="5"/><line x1="2" y1="9" x2="16" y2="9"/><line x1="2" y1="13" x2="16" y2="13"/></>
+            }
+          </svg>
+        </button>
+      </div>
     </div>
-    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-      <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Pesquisar"><Icon name="search" size={16} /></button>
-      <button className="itx-btn itx-btn-ghost itx-btn-sm" title="Carrinho" onClick={() => onNav?.("bo-login")}><Icon name="cart" size={16} /></button>
-      <button className="itx-btn itx-btn-primary itx-btn-sm">Fale Connosco</button>
-    </div>
-  </div>
-);
+  );
+};
 
 const SiteFooter = () => (
   <div className="itx-foot">
@@ -56,7 +71,6 @@ const CardImageHeader = ({ course, height = 168 }) => {
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>
       <div className="itx-img" style={{ height, backgroundImage: `url(${course.img})` }} />
-      {/* Date badge — top left */}
       {day && (
         <div style={{
           position: "absolute", top: 12, left: 12,
@@ -68,7 +82,6 @@ const CardImageHeader = ({ course, height = 168 }) => {
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", color: "var(--ink-3)", marginTop: 2 }}>{month}</div>
         </div>
       )}
-      {/* Format badge — top right */}
       <div style={{
         position: "absolute", top: 12, right: 12,
         background: isOnline ? "rgba(15,58,34,0.88)" : "rgba(255,255,255,0.88)",
@@ -88,7 +101,6 @@ const CardImageHeader = ({ course, height = 168 }) => {
 // Course card — three variants
 const CourseCard = ({ course, variant = "v1", onAdd, onOpen }) => {
   if (variant === "v2") {
-    // Compact horizontal
     return (
       <div className="itx-card" style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 0, padding: 0, cursor: "pointer", overflow: "hidden" }} onClick={() => onOpen?.(course)}>
         <div style={{ position: "relative" }}>
@@ -124,7 +136,6 @@ const CourseCard = ({ course, variant = "v1", onAdd, onOpen }) => {
     );
   }
   if (variant === "v3") {
-    // Editorial — same image overlays, tighter body
     return (
       <div style={{ cursor: "pointer", borderRadius: "var(--r-xl)", overflow: "hidden", background: "white", border: "1px solid rgba(200,230,215,.7)", boxShadow: "var(--sh-1)", transition: "transform .18s ease, box-shadow .18s ease" }}
         onClick={() => onOpen?.(course)}
@@ -149,12 +160,10 @@ const CourseCard = ({ course, variant = "v1", onAdd, onOpen }) => {
       </div>
     );
   }
-  // v1 default — image with overlaid badges, structured body, date + price footer
   return (
     <div className="itx-card" style={{ padding: 0, overflow: "hidden", cursor: "pointer", display: "flex", flexDirection: "column" }} onClick={() => onOpen?.(course)}>
       <CardImageHeader course={course} height={168} />
       <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
-        {/* Category + duration */}
         <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10 }}>
           <span className="itx-pill itx-pill-primary" style={{ fontSize: 11 }}>{course.area}</span>
           <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 3 }}>
@@ -166,11 +175,8 @@ const CourseCard = ({ course, variant = "v1", onAdd, onOpen }) => {
             </span>
           )}
         </div>
-        {/* Title */}
         <div style={{ fontFamily: "var(--display)", fontSize: 19, lineHeight: 1.2, fontWeight: 700, marginBottom: 7, color: "var(--ink)" }}>{course.title}</div>
-        {/* Description */}
         <div style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.55, flex: 1, marginBottom: 14 }}>{course.short}</div>
-        {/* Footer: date left, price right */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--line)", paddingTop: 12 }}>
           <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 5 }}>
             <Icon name="cal" size={13}/>{course.start}

@@ -10,6 +10,7 @@ const Catalog = ({ onNav, onAdd }) => {
   const [price, setPrice] = React.useState(800);
   const [q, setQ] = React.useState("");
   const [view, setView] = React.useState("grid");
+  const [filtersOpen, setFiltersOpen] = React.useState(false);
 
   const filtered = COURSES.filter(c => {
     if (area !== "Todas" && c.area !== area) return false;
@@ -29,11 +30,17 @@ const Catalog = ({ onNav, onAdd }) => {
         <div style={{ padding: "32px 40px 16px", borderBottom: "1px solid var(--line)" }}>
           <div className="itx-pill itx-pill-primary">Catálogo</div>
           <h1 style={{ fontFamily: "var(--display)", fontSize: 44, margin: "10px 0 6px", fontWeight: 600 }}>Todos os cursos</h1>
-          <p style={{ color: "var(--ink-3)", margin: 0, fontSize: 14 }}>{filtered.length} cursos encontrados</p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <p style={{ color: "var(--ink-3)", margin: 0, fontSize: 14 }}>{filtered.length} cursos encontrados</p>
+            {/* Mobile filter toggle */}
+            <button className="rsp-catalog-filter-btn itx-btn itx-btn-secondary itx-btn-sm" onClick={() => setFiltersOpen(!filtersOpen)}>
+              <Icon name="settings" size={14}/>{filtersOpen ? "Fechar filtros" : "Filtros"}
+            </button>
+          </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: 24, padding: 24 }}>
-          {/* Filters */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 18, position: "sticky", top: 80, alignSelf: "start" }}>
+        <div className="rsp-catalog">
+          {/* Filters sidebar */}
+          <div className={`rsp-catalog-sidebar${filtersOpen ? " open" : ""}`}>
             <div>
               <label className="itx-label">Pesquisar</label>
               <input className="itx-input" placeholder="Nome do curso…" value={q} onChange={e => setQ(e.target.value)} />
@@ -102,9 +109,9 @@ const CourseDetail = ({ courseId, onNav, onAdd }) => {
           <a onClick={() => onNav?.("catalog")} style={{ color: "inherit", cursor: "pointer" }}>Cursos</a> ›{" "}
           <span style={{ color: "var(--ink)" }}>{c.title}</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 32, padding: "20px 40px 40px" }}>
+        <div className="rsp-detail">
           <div>
-            <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
+            <div style={{ display: "flex", gap: 6, marginBottom: 12, flexWrap: "wrap" }}>
               <span className="itx-pill itx-pill-primary">{c.area}</span>
               <span className="itx-pill">{c.level}</span>
               <span className="itx-pill">{c.format}</span>
@@ -157,7 +164,7 @@ const CourseDetail = ({ courseId, onNav, onAdd }) => {
             </div>
           </div>
           {/* Sticky enroll card */}
-          <div style={{ position: "sticky", top: 80, alignSelf: "start" }}>
+          <div className="rsp-detail-sidebar">
             <div className="itx-card" style={{ padding: 24 }}>
               <div style={{ fontFamily: "var(--display)", fontSize: 40, lineHeight: 1, marginBottom: 4 }}>{fmtEUR(c.price)}</div>
               <div style={{ fontSize: 12, color: "var(--ink-3)", marginBottom: 18 }}>ou 3× {fmtEUR(c.price / 3)} sem juros</div>
@@ -190,18 +197,18 @@ const Checkout = ({ cart, onNav, setCart }) => {
     <div className="itx-page">
       <div className="scroll">
         <SiteNav onNav={onNav} />
-        <div style={{ padding: "32px 40px", maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ padding: "32px 20px", maxWidth: 1100, margin: "0 auto" }}>
           <div className="itx-pill itx-pill-primary">Inscrição</div>
           <h1 style={{ fontFamily: "var(--display)", fontSize: 40, margin: "10px 0 4px", fontWeight: 600 }}>Finalizar inscrição</h1>
           {/* Steps */}
-          <div style={{ display: "flex", gap: 8, margin: "24px 0" }}>
+          <div className="rsp-steps">
             {["Dados", "Pagamento", "Revisão", "Confirmação"].map((s, i) => (
               <div key={s} style={{ flex: 1, padding: "10px 14px", borderRadius: 8, background: step > i ? "var(--primary-soft)" : step === i + 1 ? "white" : "var(--paper-3)", border: "1px solid", borderColor: step === i + 1 ? "var(--primary)" : "var(--line)", color: step >= i + 1 ? "var(--primary-ink)" : "var(--ink-3)", fontSize: 13, display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ width: 22, height: 22, borderRadius: 999, background: step > i ? "var(--primary)" : step === i + 1 ? "var(--primary)" : "var(--line-2)", color: "white", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>{step > i ? "✓" : i + 1}</span>{s}
+                <span style={{ width: 22, height: 22, borderRadius: 999, background: step > i ? "var(--primary)" : step === i + 1 ? "var(--primary)" : "var(--line-2)", color: "white", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, flexShrink: 0 }}>{step > i ? "✓" : i + 1}</span>{s}
               </div>
             ))}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 24 }}>
+          <div className="rsp-checkout">
             <div className="itx-card">
               {step === 1 && (
                 <>
@@ -297,9 +304,9 @@ const Checkout = ({ cart, onNav, setCart }) => {
 };
 
 const MVV = [
-  { icon: "book",  title: "Missão",      text: "Formar profissionais com competências reais, validadas pelo mercado de trabalho e adaptadas à evolução das exigências setoriais." },
-  { icon: "eye",   title: "Visão",       text: "Ser a referência de formação técnica e profissional em Lisboa, reconhecida pela qualidade pedagógica e pelo impacto nas carreiras." },
-  { icon: "check", title: "Valores",     text: "Rigor técnico, ética profissional e proximidade com cada aluno — desde a primeira sessão até ao certificado final." },
+  { icon: "book",  title: "Missão",  text: "Formar profissionais com competências reais, validadas pelo mercado de trabalho e adaptadas à evolução das exigências setoriais." },
+  { icon: "eye",   title: "Visão",   text: "Ser a referência de formação técnica e profissional em Lisboa, reconhecida pela qualidade pedagógica e pelo impacto nas carreiras." },
+  { icon: "check", title: "Valores", text: "Rigor técnico, ética profissional e proximidade com cada aluno — desde a primeira sessão até ao certificado final." },
 ];
 
 const About = ({ onNav }) => (
@@ -308,9 +315,8 @@ const About = ({ onNav }) => (
 
     {/* ── Hero block ── */}
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "64px 40px 0" }}>
-
-      {/* Split header: large title left / description right */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "end", marginBottom: 40 }}>
+      {/* Split header */}
+      <div className="rsp-grid-2" style={{ marginBottom: 40 }}>
         <div>
           <span className="itx-pill itx-pill-primary" style={{ marginBottom: 16, display: "inline-flex" }}>Quem somos</span>
           <h1 style={{ fontFamily: "var(--display)", fontSize: 52, lineHeight: 1.06, fontWeight: 700, margin: "12px 0 0", textWrap: "balance", color: "var(--ink)" }}>
@@ -329,29 +335,10 @@ const About = ({ onNav }) => (
 
       {/* Wide image with stat overlay */}
       <div style={{ position: "relative", borderRadius: 24, overflow: "hidden" }}>
-        <div className="itx-img" style={{
-          backgroundImage: `url(${U("1552664730-d307ca884978", 1400)})`,
-          height: 420,
-        }}/>
-
-        {/* Dark green stat card — top right, overlaid on image */}
-        <div style={{
-          position: "absolute", top: 24, right: 24,
-          background: "var(--primary)",
-          borderRadius: 18, padding: "20px 28px",
-          display: "flex", gap: 0, alignItems: "stretch",
-          boxShadow: "var(--sh-3)"
-        }}>
-          {[
-            { num: "+2.400", label: "Alunos\nformados" },
-            { num: "+60",    label: "Cursos\nno catálogo" },
-          ].map(({ num, label }, i) => (
-            <div key={num} style={{
-              display: "flex", flexDirection: "column", alignItems: "flex-start",
-              paddingRight: i === 0 ? 28 : 0,
-              paddingLeft:  i === 1 ? 28 : 0,
-              borderLeft: i === 1 ? "1px solid rgba(255,255,255,.25)" : "none"
-            }}>
+        <div className="itx-img" style={{ backgroundImage: `url(${U("1552664730-d307ca884978", 1400)})`, height: 420 }}/>
+        <div style={{ position: "absolute", top: 24, right: 24, background: "var(--primary)", borderRadius: 18, padding: "20px 28px", display: "flex", gap: 0, alignItems: "stretch", boxShadow: "var(--sh-3)" }}>
+          {[{ num: "+2.400", label: "Alunos\nformados" }, { num: "+60", label: "Cursos\nno catálogo" }].map(({ num, label }, i) => (
+            <div key={num} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", paddingRight: i === 0 ? 28 : 0, paddingLeft: i === 1 ? 28 : 0, borderLeft: i === 1 ? "1px solid rgba(255,255,255,.25)" : "none" }}>
               <span style={{ fontFamily: "var(--display)", fontSize: 34, fontWeight: 800, color: "white", lineHeight: 1 }}>{num}</span>
               <span style={{ fontSize: 12, color: "rgba(255,255,255,.72)", marginTop: 5, lineHeight: 1.4, whiteSpace: "pre-line" }}>{label}</span>
             </div>
@@ -362,16 +349,10 @@ const About = ({ onNav }) => (
 
     {/* ── Missão / Visão / Valores ── */}
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 40px" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+      <div className="rsp-grid-3-sm">
         {MVV.map(({ icon, title, text }) => (
           <div key={title} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {/* Icon circle */}
-            <div style={{
-              width: 44, height: 44, borderRadius: 12,
-              background: "var(--primary-soft)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0
-            }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={icon} size={20} color="var(--primary)" strokeWidth={1.8}/>
             </div>
             <div>
@@ -386,7 +367,7 @@ const About = ({ onNav }) => (
     {/* ── Equipa ── */}
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px 72px" }}>
       <h2 style={{ fontFamily: "var(--display)", fontSize: 34, margin: "0 0 24px", fontWeight: 700 }}>Equipa</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
+      <div className="rsp-grid-4">
         {[["Sérgio Marques", "Diretor pedagógico"], ["Rui Andrade", "Coord. Tecnologia"], ["Cláudia Sousa", "Coord. Línguas"], ["André Dias", "Coord. Gestão"]].map(([n, r]) => (
           <div key={n}>
             <div className="itx-img" style={{ backgroundImage: `url(${TESTIMONIAL_IMG})`, aspectRatio: "1", borderRadius: 14 }}/>
@@ -404,10 +385,10 @@ const About = ({ onNav }) => (
 const Blog = ({ onNav }) => (
   <div className="itx-page"><div className="scroll">
     <SiteNav active="blog" onNav={onNav} />
-    <div style={{ padding: "40px 40px", maxWidth: 1100, margin: "0 auto" }}>
+    <div style={{ padding: "40px 20px", maxWidth: 1100, margin: "0 auto" }}>
       <div className="itx-pill itx-pill-primary">Blog</div>
       <h1 style={{ fontFamily: "var(--display)", fontSize: 48, margin: "10px 0 28px", fontWeight: 600 }}>Notícias e ideias</h1>
-      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 20, marginBottom: 28 }}>
+      <div className="rsp-grid-2-1" style={{ marginBottom: 28 }}>
         <div className="itx-card" style={{ padding: 0, overflow: "hidden", cursor: "pointer" }}>
           <div className="itx-img" style={{ backgroundImage: `url(${U("1456513080510-7bf3a84b82f8", 1200)})`, height: 320 }}/>
           <div style={{ padding: 24 }}>
@@ -434,15 +415,15 @@ const Blog = ({ onNav }) => (
 const Contact = ({ onNav }) => (
   <div className="itx-page"><div className="scroll">
     <SiteNav active="contact" onNav={onNav} />
-    <div style={{ padding: "60px 40px", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+    <div className="rsp-grid-2" style={{ padding: "60px 40px", maxWidth: 1100, margin: "0 auto" }}>
       <div>
         <div className="itx-pill itx-pill-primary">Contactos</div>
         <h1 style={{ fontFamily: "var(--display)", fontSize: 48, margin: "12px 0 16px", fontWeight: 600, textWrap: "balance" }}>Falar com a equipa Intellectus.</h1>
         <p style={{ color: "var(--ink-2)", fontSize: 16, lineHeight: 1.6 }}>Respondemos em menos de 24h. Para empresas, marca uma reunião connosco.</p>
         <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 18 }}>
-          <div style={{ display: "flex", gap: 14 }}><div style={{ width: 40, height: 40, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="pin" size={18} color="var(--primary)"/></div><div><b>Sede</b><div style={{ fontSize: 13, color: "var(--ink-2)" }}>Rua das Escolas, 142, 1200-100 Lisboa</div></div></div>
-          <div style={{ display: "flex", gap: 14 }}><div style={{ width: 40, height: 40, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="phone" size={18} color="var(--primary)"/></div><div><b>Telefone</b><div style={{ fontSize: 13, color: "var(--ink-2)" }}>+351 210 000 000 · 9h–19h dias úteis</div></div></div>
-          <div style={{ display: "flex", gap: 14 }}><div style={{ width: 40, height: 40, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="mail" size={18} color="var(--primary)"/></div><div><b>Email</b><div style={{ fontSize: 13, color: "var(--ink-2)" }}>geral@intellectus.pt</div></div></div>
+          <div style={{ display: "flex", gap: 14 }}><div style={{ width: 40, height: 40, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="pin" size={18} color="var(--primary)"/></div><div><b>Sede</b><div style={{ fontSize: 13, color: "var(--ink-2)" }}>Rua das Escolas, 142, 1200-100 Lisboa</div></div></div>
+          <div style={{ display: "flex", gap: 14 }}><div style={{ width: 40, height: 40, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="phone" size={18} color="var(--primary)"/></div><div><b>Telefone</b><div style={{ fontSize: 13, color: "var(--ink-2)" }}>+351 210 000 000 · 9h–19h dias úteis</div></div></div>
+          <div style={{ display: "flex", gap: 14 }}><div style={{ width: 40, height: 40, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={18} color="var(--primary)"/></div><div><b>Email</b><div style={{ fontSize: 13, color: "var(--ink-2)" }}>geral@intellectus.pt</div></div></div>
         </div>
       </div>
       <div className="itx-card" style={{ padding: 28 }}>
