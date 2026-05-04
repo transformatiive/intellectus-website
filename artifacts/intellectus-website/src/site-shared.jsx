@@ -46,67 +46,136 @@ const SiteFooter = () => (
   </div>
 );
 
+// Shared image header with date + format badge overlays
+const CardImageHeader = ({ course, height = 168 }) => {
+  const parts = course.start && course.start !== "Contínuo" ? course.start.split(" ") : null;
+  const day = parts?.[0];
+  const month = parts?.[1]?.toUpperCase();
+  const isOnline = course.format === "Online";
+  const isHybrid = course.format === "Híbrido";
+  return (
+    <div style={{ position: "relative", overflow: "hidden" }}>
+      <div className="itx-img" style={{ height, backgroundImage: `url(${course.img})` }} />
+      {/* Date badge — top left */}
+      {day && (
+        <div style={{
+          position: "absolute", top: 12, left: 12,
+          background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)",
+          borderRadius: 10, padding: "8px 13px", textAlign: "center", minWidth: 52,
+          boxShadow: "0 2px 8px rgba(0,0,0,.12)"
+        }}>
+          <div style={{ fontFamily: "var(--display)", fontSize: 22, fontWeight: 700, lineHeight: 1, color: "var(--ink)" }}>{day}</div>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", color: "var(--ink-3)", marginTop: 2 }}>{month}</div>
+        </div>
+      )}
+      {/* Format badge — top right */}
+      <div style={{
+        position: "absolute", top: 12, right: 12,
+        background: isOnline ? "rgba(15,58,34,0.88)" : "rgba(255,255,255,0.88)",
+        backdropFilter: "blur(8px)", borderRadius: 999,
+        padding: "5px 11px", display: "flex", alignItems: "center", gap: 5,
+        boxShadow: "0 2px 8px rgba(0,0,0,.12)"
+      }}>
+        <div style={{ width: 6, height: 6, borderRadius: "50%", background: isOnline ? "#6ecf9b" : isHybrid ? "var(--primary)" : "var(--ink-3)", flexShrink: 0 }} />
+        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", color: isOnline ? "white" : "var(--ink-2)" }}>
+          {isOnline ? "LIVE" : course.format.toUpperCase()}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 // Course card — three variants
 const CourseCard = ({ course, variant = "v1", onAdd, onOpen }) => {
   if (variant === "v2") {
     // Compact horizontal
     return (
-      <div className="itx-card" style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 16, padding: 14, cursor: "pointer" }} onClick={() => onOpen?.(course)}>
-        <div className="itx-img" style={{ height: 120, borderRadius: 8, backgroundImage: `url(${course.img})` }}/>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", minWidth: 0 }}>
-          <div>
-            <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
-              <span className="itx-pill itx-pill-primary">{course.area}</span>
-              <span className="itx-pill">{course.format}</span>
-            </div>
-            <div style={{ fontFamily: "var(--display)", fontSize: 19, lineHeight: 1.2, marginBottom: 6 }}>{course.title}</div>
-            <div style={{ fontSize: 13, color: "var(--ink-3)" }}>{course.short}</div>
+      <div className="itx-card" style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 0, padding: 0, cursor: "pointer", overflow: "hidden" }} onClick={() => onOpen?.(course)}>
+        <div style={{ position: "relative" }}>
+          <div className="itx-img" style={{ height: "100%", minHeight: 110, backgroundImage: `url(${course.img})` }} />
+          <div style={{
+            position: "absolute", bottom: 8, left: 8,
+            background: "rgba(15,58,34,0.88)", backdropFilter: "blur(6px)",
+            borderRadius: 999, padding: "3px 9px", display: "flex", alignItems: "center", gap: 4
+          }}>
+            <div style={{ width: 5, height: 5, borderRadius: "50%", background: course.format === "Online" ? "#6ecf9b" : "rgba(255,255,255,.6)" }} />
+            <span style={{ fontSize: 10, fontWeight: 700, color: "white", letterSpacing: "0.05em" }}>{course.format === "Online" ? "LIVE" : course.format.toUpperCase()}</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
-            <span style={{ fontFamily: "var(--display)", fontSize: 22 }}>{fmtEUR(course.price)}</span>
-            <button className="itx-btn itx-btn-primary itx-btn-sm" onClick={(e) => { e.stopPropagation(); onAdd?.(course); }}>Inscrever</button>
+        </div>
+        <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ display: "flex", gap: 6, marginBottom: 8, alignItems: "center" }}>
+              <span className="itx-pill itx-pill-primary" style={{ fontSize: 11 }}>{course.area}</span>
+              <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 3 }}>
+                <Icon name="clock" size={11}/>{course.hours}h
+              </span>
+            </div>
+            <div style={{ fontFamily: "var(--display)", fontSize: 17, lineHeight: 1.2, fontWeight: 700, marginBottom: 5 }}>{course.title}</div>
+            <div style={{ fontSize: 12, color: "var(--ink-3)", lineHeight: 1.5 }}>{course.short}</div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 10, paddingTop: 10, borderTop: "1px solid var(--line)" }}>
+            <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 4 }}>
+              <Icon name="cal" size={12}/>{course.start}
+            </span>
+            <span style={{ fontFamily: "var(--display)", fontSize: 18, fontWeight: 700, color: "var(--primary)" }}>{fmtEUR(course.price)}</span>
           </div>
         </div>
       </div>
     );
   }
   if (variant === "v3") {
-    // Editorial — image dominant, text overlaid below
+    // Editorial — same image overlays, tighter body
     return (
-      <div style={{ cursor: "pointer", borderRadius: 14, overflow: "hidden", background: "white", border: "1px solid var(--line)" }} onClick={() => onOpen?.(course)}>
-        <div className="itx-img" style={{ height: 160, backgroundImage: `url(${course.img})` }}/>
-        <div style={{ padding: 16 }}>
-          <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--primary)" }}>{course.area} · {course.level}</div>
-          <div style={{ fontFamily: "var(--display)", fontSize: 22, lineHeight: 1.15, margin: "6px 0 8px" }}>{course.title}</div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderTop: "1px solid var(--line)", paddingTop: 10, marginTop: 10 }}>
-            <span style={{ fontSize: 13, color: "var(--ink-3)" }}>{course.hours}h · {course.format}</span>
-            <span style={{ fontFamily: "var(--display)", fontSize: 22 }}>{fmtEUR(course.price)}</span>
+      <div style={{ cursor: "pointer", borderRadius: "var(--r-xl)", overflow: "hidden", background: "white", border: "1px solid rgba(200,230,215,.7)", boxShadow: "var(--sh-1)", transition: "transform .18s ease, box-shadow .18s ease" }}
+        onClick={() => onOpen?.(course)}
+        onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "var(--sh-2)"; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "var(--sh-1)"; }}>
+        <CardImageHeader course={course} height={155} />
+        <div style={{ padding: "14px 16px 16px" }}>
+          <div style={{ display: "flex", gap: 7, alignItems: "center", marginBottom: 9 }}>
+            <span className="itx-pill itx-pill-primary" style={{ fontSize: 11 }}>{course.area}</span>
+            <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 3 }}>
+              <Icon name="clock" size={11}/>{course.hours}h
+            </span>
+          </div>
+          <div style={{ fontFamily: "var(--display)", fontSize: 18, lineHeight: 1.2, fontWeight: 700, marginBottom: 6 }}>{course.title}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--line)", paddingTop: 10, marginTop: 10 }}>
+            <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 4 }}>
+              <Icon name="cal" size={12}/>{course.start}
+            </span>
+            <span style={{ fontFamily: "var(--display)", fontSize: 19, fontWeight: 700, color: "var(--primary)" }}>{fmtEUR(course.price)}</span>
           </div>
         </div>
       </div>
     );
   }
-  // v1 default: clean card with image top
+  // v1 default — image with overlaid badges, structured body, date + price footer
   return (
     <div className="itx-card" style={{ padding: 0, overflow: "hidden", cursor: "pointer", display: "flex", flexDirection: "column" }} onClick={() => onOpen?.(course)}>
-      <div className="itx-img" style={{ height: 140, backgroundImage: `url(${course.img})` }}/>
-      <div style={{ padding: 16, display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-        <div style={{ display: "flex", gap: 6 }}>
-          <span className="itx-pill itx-pill-primary">{course.area}</span>
-          {course.certified && <span className="itx-pill itx-pill-success"><Icon name="check" size={11}/>Certificado</span>}
+      <CardImageHeader course={course} height={168} />
+      <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
+        {/* Category + duration */}
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10 }}>
+          <span className="itx-pill itx-pill-primary" style={{ fontSize: 11 }}>{course.area}</span>
+          <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 3 }}>
+            <Icon name="clock" size={11}/>{course.hours}h
+          </span>
+          {course.certified && (
+            <span style={{ fontSize: 12, color: "var(--success)", display: "inline-flex", alignItems: "center", gap: 3, marginLeft: "auto" }}>
+              <Icon name="check" size={11} color="var(--success)"/>Certificado
+            </span>
+          )}
         </div>
-        <div style={{ fontFamily: "var(--display)", fontSize: 21, lineHeight: 1.2 }}>{course.title}</div>
-        <div style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.5, flex: 1 }}>{course.short}</div>
-        <div style={{ display: "flex", gap: 12, fontSize: 12, color: "var(--ink-3)" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon name="clock" size={12}/>{course.hours}h</span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon name="star" size={12} color="oklch(0.72 0.16 55)"/>{course.rating}</span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon name="users" size={12}/>{course.students}</span>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4, borderTop: "1px solid var(--line)", paddingTop: 12 }}>
-          <span style={{ fontFamily: "var(--display)", fontSize: 22 }}>{fmtEUR(course.price)}</span>
-          <button className="itx-btn itx-btn-primary itx-btn-sm" onClick={(e) => { e.stopPropagation(); onAdd?.(course); }}>
-            <Icon name="plus" size={13}/>Inscrever
-          </button>
+        {/* Title */}
+        <div style={{ fontFamily: "var(--display)", fontSize: 19, lineHeight: 1.2, fontWeight: 700, marginBottom: 7, color: "var(--ink)" }}>{course.title}</div>
+        {/* Description */}
+        <div style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.55, flex: 1, marginBottom: 14 }}>{course.short}</div>
+        {/* Footer: date left, price right */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--line)", paddingTop: 12 }}>
+          <span style={{ fontSize: 12, color: "var(--ink-3)", display: "inline-flex", alignItems: "center", gap: 5 }}>
+            <Icon name="cal" size={13}/>{course.start}
+          </span>
+          <span style={{ fontFamily: "var(--display)", fontSize: 20, fontWeight: 700, color: "var(--primary)" }}>{fmtEUR(course.price)}</span>
         </div>
       </div>
     </div>
