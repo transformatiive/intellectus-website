@@ -1,9 +1,10 @@
 // Public site — shared chrome (nav, footer) + course card variants
 import { Icon, fmtEUR } from './data.jsx';
+import logoUrl from './logo.svg';
 
 const SiteNav = ({ active = "home", onNav }) => (
   <div className="itx-nav">
-    <div className="itx-nav-logo">intellectus<b>.</b></div>
+    <div className="itx-nav-logo"><img src={logoUrl} alt="Intellectus" style={{ height: 28 }} /></div>
     <div className="itx-nav-links">
       <a onClick={() => onNav?.("home")} style={{ color: active === "home" ? "var(--ink)" : undefined, fontWeight: active === "home" ? 500 : 400 }}>Início</a>
       <a onClick={() => onNav?.("catalog")} style={{ color: active === "catalog" ? "var(--ink)" : undefined, fontWeight: active === "catalog" ? 500 : 400 }}>Cursos</a>
@@ -23,7 +24,7 @@ const SiteNav = ({ active = "home", onNav }) => (
 const SiteFooter = () => (
   <div className="itx-foot">
     <div>
-      <div style={{ fontFamily: "var(--display)", fontSize: 26, color: "white", marginBottom: 10 }}>intellectus<span style={{ color: "oklch(0.78 0.15 155)" }}>.</span></div>
+      <div style={{ marginBottom: 10 }}><img src={logoUrl} alt="Intellectus" style={{ height: 28, filter: "brightness(0) invert(1)" }} /></div>
       <div style={{ fontSize: 13, lineHeight: 1.6, opacity: .8, maxWidth: 280 }}>Centro de formação certificado. Cursos para profissionais, empresas e estudantes.</div>
       <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
         <span className="itx-pill" style={{ background: "rgba(255,255,255,.08)", color: "oklch(0.85 0.005 90)" }}>Certificado DGERT</span>
