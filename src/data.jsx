@@ -87,4 +87,4 @@ const Icon = ({ name, size = 16, color = "currentColor", strokeWidth = 1.6 }) =>
 
 const fmtEUR = (n) => new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
-Object.assign(window, { COURSES, AREAS, FORMATS, ENROLLMENTS, POSTS, Icon, fmtEUR, U, HERO_IMG, HERO_IMG_ALT, TEAM_IMG, TESTIMONIAL_IMG });
+export { COURSES, AREAS, FORMATS, ENROLLMENTS, POSTS, Icon, fmtEUR, U, HERO_IMG, HERO_IMG_ALT, TEAM_IMG, TESTIMONIAL_IMG };

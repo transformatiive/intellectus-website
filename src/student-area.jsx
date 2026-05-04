@@ -1,4 +1,7 @@
 // Student area — login + dashboard with enrolled courses + materials
+import React from 'react';
+import { COURSES, Icon } from './data.jsx';
+import { SiteNav, SiteFooter } from './site-shared.jsx';
 
 const StudentArea = ({ onNav }) => {
   const [tab, setTab] = React.useState("courses");
@@ -68,4 +71,4 @@ const StudentArea = ({ onNav }) => {
   );
 };
 
-Object.assign(window, { StudentArea });
+export { StudentArea };

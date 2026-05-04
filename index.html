@@ -4,64 +4,12 @@
 <meta charset="utf-8" />
 <title>Intellectus — Centro de Formação</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-<link rel="stylesheet" href="styles.css" />
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
-
-<style>
-  html, body, #root { height: 100%; margin: 0; }
-  body { background: var(--paper); font-family: "Plus Jakarta Sans", sans-serif; }
-</style>
 </head>
 <body>
 <div id="root"></div>
-
-<script type="text/babel" src="data.jsx"></script>
-<script type="text/babel" src="site-shared.jsx"></script>
-<script type="text/babel" src="site-home.jsx"></script>
-<script type="text/babel" src="site-pages.jsx"></script>
-<script type="text/babel" src="student-area.jsx"></script>
-<script type="text/babel" src="backoffice.jsx"></script>
-
-<script type="text/babel" data-presets="env,react">
-const Prototype = ({ initialScreen = "home" }) => {
-  const [screen, setScreen] = React.useState(initialScreen);
-  const [courseId, setCourseId] = React.useState("c1");
-  const [cart, setCart] = React.useState([]);
-  const [editing, setEditing] = React.useState(null);
-
-  const onAdd = (c) => setCart(prev => prev.find(x => x.id === c.id) ? prev : [...prev, c]);
-  const onNav = (s, id) => { if (id) setCourseId(id); setScreen(s); window.scrollTo(0, 0); };
-  const boNav = (s) => { setScreen("bo-" + s); window.scrollTo(0, 0); };
-
-  if (screen === "home") return <HomeA onNav={onNav} onAdd={onAdd}/>;
-  if (screen === "homeB") return <HomeB onNav={onNav} onAdd={onAdd}/>;
-  if (screen === "homeC") return <HomeC onNav={onNav} onAdd={onAdd}/>;
-  if (screen === "catalog") return <Catalog onNav={onNav} onAdd={onAdd}/>;
-  if (screen === "course") return <CourseDetail courseId={courseId} onNav={onNav} onAdd={onAdd}/>;
-  if (screen === "checkout") return <Checkout cart={cart.length ? cart : [COURSES[0]]} onNav={onNav} setCart={setCart}/>;
-  if (screen === "about") return <About onNav={onNav}/>;
-  if (screen === "blog") return <Blog onNav={onNav}/>;
-  if (screen === "contact") return <Contact onNav={onNav}/>;
-  if (screen === "student") return <StudentArea onNav={onNav}/>;
-  if (screen === "bo-login") return <BoLogin onLogin={() => setScreen("bo-dash")}/>;
-  if (screen === "bo-dash") return <BoDash onNav={boNav}/>;
-  if (screen === "bo-courses") return editing ? <BoCourseEdit course={editing} onNav={boNav} onClose={() => setEditing(null)}/> : <BoCourses onNav={boNav} onEdit={setEditing}/>;
-  if (screen === "bo-enroll") return <BoEnroll onNav={boNav}/>;
-  if (screen === "bo-pay") return <BoPay onNav={boNav}/>;
-  if (screen === "bo-reports") return <BoReports onNav={boNav}/>;
-  if (screen === "bo-cms") return <BoCMS onNav={boNav}/>;
-  return <HomeA onNav={onNav} onAdd={onAdd}/>;
-};
-
-ReactDOM.createRoot(document.getElementById("root")).render(<Prototype/>);
-</script>
+<script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
