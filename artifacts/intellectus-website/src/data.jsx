@@ -4,15 +4,87 @@
 const U = (id, w = 800) => `https://images.unsplash.com/photo-${id}?w=${w}&auto=format&fit=crop&q=70`;
 
 const COURSES = [
-  { id: "c1", title: "Excel Avançado para Gestão", area: "Tecnologia", level: "Avançado", format: "Presencial", duration: 30, price: 280, hours: 30, rating: 4.8, students: 142, certified: true, schedule: "Seg/Qua · 19h–22h", start: "12 Mai 2026", short: "Domina tabelas dinâmicas, Power Query e dashboards.", img: U("1551288049-bebda4e38f71") },
-  { id: "c2", title: "Inglês para Negócios — B2", area: "Línguas", level: "Intermédio", format: "Online", duration: 60, price: 420, hours: 60, rating: 4.9, students: 287, certified: true, schedule: "Ter/Qui · 18h30–20h", start: "06 Mai 2026", short: "Reuniões, e-mails e apresentações com confiança.", img: U("1543269865-cbf427effbad") },
-  { id: "c3", title: "Marketing Digital — do zero ao Meta Ads", area: "Marketing", level: "Iniciante", format: "Híbrido", duration: 45, price: 360, hours: 45, rating: 4.7, students: 198, certified: true, schedule: "Sáb · 10h–13h", start: "10 Mai 2026", short: "SEO, redes sociais, conteúdo e campanhas pagas.", img: U("1432888622747-4eb9a8f5a07d") },
-  { id: "c4", title: "Contabilidade para não-Contabilistas", area: "Gestão", level: "Iniciante", format: "Presencial", duration: 24, price: 240, hours: 24, rating: 4.6, students: 96, certified: true, schedule: "Seg/Qua · 19h–22h", start: "19 Mai 2026", short: "Lê balanços, demonstrações e fluxos de caixa.", img: U("1554224155-6726b3ff858f") },
-  { id: "c5", title: "Programação Web com JavaScript", area: "Tecnologia", level: "Intermédio", format: "Online", duration: 90, price: 590, hours: 90, rating: 4.9, students: 312, certified: true, schedule: "Ter/Qui · 19h–22h", start: "13 Mai 2026", short: "HTML, CSS, JS moderno, frameworks e deploy.", img: U("1517694712202-14dd9538aa97") },
-  { id: "c6", title: "Recursos Humanos & Liderança", area: "Gestão", level: "Avançado", format: "Híbrido", duration: 36, price: 340, hours: 36, rating: 4.5, students: 78, certified: true, schedule: "Sex · 18h–21h", start: "08 Mai 2026", short: "Gestão de equipas, feedback e cultura.", img: U("1521737604893-d14cc237f11d") },
-  { id: "c7", title: "Apoio Escolar — Matemática 12º", area: "Apoio Escolar", level: "Secundário", format: "Presencial", duration: 60, price: 180, hours: 60, rating: 4.8, students: 412, certified: false, schedule: "Sáb · 9h–12h", start: "Contínuo", short: "Preparação para exame nacional, turmas pequenas.", img: U("1509228627152-72ae9ae6848d") },
-  { id: "c8", title: "Photoshop & Illustrator — Design Gráfico", area: "Design", level: "Iniciante", format: "Presencial", duration: 48, price: 380, hours: 48, rating: 4.7, students: 134, certified: true, schedule: "Seg/Qua · 19h–22h", start: "26 Mai 2026", short: "Composição, tipografia e identidade visual.", img: U("1572044162444-ad60f128bdea") },
-  { id: "c9", title: "Cibersegurança Essencial", area: "Tecnologia", level: "Intermédio", format: "Online", duration: 40, price: 460, hours: 40, rating: 4.8, students: 88, certified: true, schedule: "Ter/Qui · 19h–21h", start: "20 Mai 2026", short: "Proteção, gestão de risco e boas práticas.", img: U("1550751827-4bd374c3f58b") },
+  { id: "c1", title: "Excel Avançado para Gestão", area: "Tecnologia", level: "Avançado", format: "Presencial", duration: 30, price: 280, hours: 30, rating: 4.8, students: 142, certified: true, schedule: "Seg/Qua · 19h–22h", start: "12 Mai 2026", short: "Domina tabelas dinâmicas, Power Query e dashboards profissionais.", img: U("1551288049-bebda4e38f71"),
+    modules: [
+      { title: "Funções Avançadas e Fórmulas Matriciais", hours: 6 },
+      { title: "Power Query — Importação e Transformação de Dados", hours: 8 },
+      { title: "Tabelas Dinâmicas e Power Pivot", hours: 8 },
+      { title: "Dashboards e Visualização de Dados", hours: 5 },
+      { title: "Macros e Automatização com VBA", hours: 3 },
+    ]
+  },
+  { id: "c2", title: "Inglês para Negócios — B2", area: "Línguas", level: "Intermédio", format: "Online", duration: 60, price: 420, hours: 60, rating: 4.9, students: 287, certified: true, schedule: "Ter/Qui · 18h30–20h", start: "06 Mai 2026", short: "Reuniões, e-mails e apresentações em inglês com confiança.", img: U("1543269865-cbf427effbad"),
+    modules: [
+      { title: "Comunicação Oral em Contexto Profissional", hours: 12 },
+      { title: "Escrita Profissional — E-mails, Relatórios e Propostas", hours: 12 },
+      { title: "Apresentações e Reuniões em Inglês", hours: 12 },
+      { title: "Negociação, Persuasão e Gestão de Conflitos", hours: 12 },
+      { title: "Vocabulário Técnico por Setor de Atividade", hours: 12 },
+    ]
+  },
+  { id: "c3", title: "Marketing Digital — do zero ao Meta Ads", area: "Marketing", level: "Iniciante", format: "Híbrido", duration: 45, price: 360, hours: 45, rating: 4.7, students: 198, certified: true, schedule: "Sáb · 10h–13h", start: "10 Mai 2026", short: "SEO, redes sociais, conteúdo e campanhas pagas.", img: U("1432888622747-4eb9a8f5a07d"),
+    modules: [
+      { title: "Estratégia de Presença Digital e Branding", hours: 6 },
+      { title: "SEO — Otimização para Motores de Pesquisa", hours: 9 },
+      { title: "Gestão de Redes Sociais — Orgânico e Conteúdo", hours: 9 },
+      { title: "Meta Ads — Criação, Segmentação e Otimização", hours: 12 },
+      { title: "Google Analytics 4 e Medição de Resultados", hours: 9 },
+    ]
+  },
+  { id: "c4", title: "Gestão Financeira para Gestores", area: "Gestão", level: "Iniciante", format: "Presencial", duration: 24, price: 240, hours: 24, rating: 4.6, students: 96, certified: true, schedule: "Seg/Qua · 19h–22h", start: "19 Mai 2026", short: "Lê balanços, demonstrações de resultados e fluxos de caixa.", img: U("1554224155-6726b3ff858f"),
+    modules: [
+      { title: "Conceitos Fundamentais de Contabilidade e Finanças", hours: 4 },
+      { title: "Leitura e Interpretação do Balanço", hours: 6 },
+      { title: "Demonstração de Resultados e Cash Flow", hours: 6 },
+      { title: "Análise de Rácios e Indicadores de Desempenho", hours: 5 },
+      { title: "Fiscalidade, IVA e Obrigações Declarativas", hours: 3 },
+    ]
+  },
+  { id: "c5", title: "Programação Web com JavaScript", area: "Tecnologia", level: "Intermédio", format: "Online", duration: 90, price: 590, hours: 90, rating: 4.9, students: 312, certified: true, schedule: "Ter/Qui · 19h–22h", start: "13 Mai 2026", short: "HTML, CSS, JS moderno, React, APIs e deploy em produção.", img: U("1517694712202-14dd9538aa97"),
+    modules: [
+      { title: "HTML5 e CSS3 — Estrutura, Layouts e Responsividade", hours: 18 },
+      { title: "JavaScript Moderno — ES6+, DOM e Assincronismo", hours: 20 },
+      { title: "Node.js e Construção de APIs REST", hours: 18 },
+      { title: "React — Componentes, Hooks e Gestão de Estado", hours: 20 },
+      { title: "Base de Dados, Autenticação e Deploy em Produção", hours: 14 },
+    ]
+  },
+  { id: "c6", title: "Recursos Humanos & Liderança", area: "Gestão", level: "Avançado", format: "Híbrido", duration: 36, price: 340, hours: 36, rating: 4.5, students: 78, certified: true, schedule: "Sex · 18h–21h", start: "08 Mai 2026", short: "Gestão de equipas, feedback, cultura e legislação laboral.", img: U("1521737604893-d14cc237f11d"),
+    modules: [
+      { title: "Estilos de Liderança e Inteligência Emocional", hours: 6 },
+      { title: "Recrutamento, Seleção e Integração de Colaboradores", hours: 8 },
+      { title: "Gestão do Desempenho — Avaliação e Feedback", hours: 8 },
+      { title: "Cultura Organizacional, Motivação e Engagement", hours: 8 },
+      { title: "Legislação Laboral e Gestão de Conflitos", hours: 6 },
+    ]
+  },
+  { id: "c7", title: "Apoio Escolar — Matemática 12º", area: "Apoio Escolar", level: "Secundário", format: "Presencial", duration: 60, price: 180, hours: 60, rating: 4.8, students: 412, certified: false, schedule: "Sáb · 9h–12h", start: "Contínuo", short: "Preparação para exame nacional em turmas reduzidas.", img: U("1509228627152-72ae9ae6848d"),
+    modules: [
+      { title: "Geometria Analítica e Trigonometria", hours: 10 },
+      { title: "Funções, Limites e Continuidade", hours: 12 },
+      { title: "Cálculo Diferencial e Integral", hours: 14 },
+      { title: "Álgebra Linear e Matrizes", hours: 12 },
+      { title: "Estatística, Probabilidades e Revisão de Exame", hours: 12 },
+    ]
+  },
+  { id: "c8", title: "Photoshop & Illustrator — Design Gráfico", area: "Design", level: "Iniciante", format: "Presencial", duration: 48, price: 380, hours: 48, rating: 4.7, students: 134, certified: true, schedule: "Seg/Qua · 19h–22h", start: "26 Mai 2026", short: "Composição, tipografia e identidade visual do zero.", img: U("1572044162444-ad60f128bdea"),
+    modules: [
+      { title: "Interface, Ferramentas Essenciais e Fluxo de Trabalho", hours: 8 },
+      { title: "Retoque, Composição e Fotomontagem no Photoshop", hours: 12 },
+      { title: "Desenho Vetorial e Ilustração no Illustrator", hours: 12 },
+      { title: "Tipografia, Grelhas e Design Editorial", hours: 8 },
+      { title: "Projeto Final — Identidade Visual de Marca", hours: 8 },
+    ]
+  },
+  { id: "c9", title: "Cibersegurança Essencial", area: "Tecnologia", level: "Intermédio", format: "Online", duration: 40, price: 460, hours: 40, rating: 4.8, students: 88, certified: true, schedule: "Ter/Qui · 19h–21h", start: "20 Mai 2026", short: "Proteção de sistemas, dados e gestão de risco cibernético.", img: U("1550751827-4bd374c3f58b"),
+    modules: [
+      { title: "Fundamentos de Cibersegurança e Panorama de Ameaças", hours: 8 },
+      { title: "Proteção de Redes, Sistemas e Endpoints", hours: 10 },
+      { title: "Segurança de Dados, Criptografia e Autenticação", hours: 8 },
+      { title: "Gestão de Incidentes e Resposta a Ataques", hours: 8 },
+      { title: "Conformidade — RGPD, ISO 27001 e Diretiva NIS2", hours: 6 },
+    ]
+  },
 ];
 
 const HERO_IMG = U("1523580494863-6f3031224c94", 1600); // students collaborating

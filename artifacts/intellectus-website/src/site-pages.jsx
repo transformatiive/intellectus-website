@@ -120,9 +120,17 @@ const CourseDetail = ({ courseId, onNav, onAdd }) => {
             </div>
             <h3 style={{ fontFamily: "var(--display)", fontSize: 24, fontWeight: 600, margin: "32px 0 12px" }}>Programa</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {["Módulo 1 · Introdução e fundamentos", "Módulo 2 · Casos práticos guiados", "Módulo 3 · Aprofundamento técnico", "Módulo 4 · Projeto final e apresentação"].map((m, i) => (
-                <div key={i} className="itx-card" style={{ padding: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div><b style={{ fontFamily: "var(--display)", fontSize: 18 }}>{m}</b><div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{Math.floor(c.hours / 4)}h · 6 aulas</div></div>
+              {(c.modules || []).map((m, i) => (
+                <div key={i} className="itx-card" style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                  <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+                    <div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--primary-soft)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <span style={{ fontFamily: "var(--display)", fontSize: 12, fontWeight: 700, color: "var(--primary)" }}>{String(i + 1).padStart(2, "0")}</span>
+                    </div>
+                    <div>
+                      <b style={{ fontFamily: "var(--display)", fontSize: 16, fontWeight: 600, color: "var(--ink)" }}>Módulo {i + 1} · {m.title}</b>
+                      <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{m.hours}h de formação</div>
+                    </div>
+                  </div>
                   <Icon name="arrowDown" size={14} color="var(--ink-3)"/>
                 </div>
               ))}
