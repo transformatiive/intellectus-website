@@ -268,30 +268,107 @@ const Checkout = ({ cart, onNav, setCart }) => {
   );
 };
 
+const MVV = [
+  { icon: "book",  title: "Missão",      text: "Formar profissionais com competências reais, validadas pelo mercado de trabalho e adaptadas à evolução das exigências setoriais." },
+  { icon: "eye",   title: "Visão",       text: "Ser a referência de formação técnica e profissional em Lisboa, reconhecida pela qualidade pedagógica e pelo impacto nas carreiras." },
+  { icon: "check", title: "Valores",     text: "Rigor técnico, ética profissional e proximidade com cada aluno — desde a primeira sessão até ao certificado final." },
+];
+
 const About = ({ onNav }) => (
   <div className="itx-page"><div className="scroll">
     <SiteNav active="about" onNav={onNav} />
-    <div style={{ padding: "60px 40px", maxWidth: 980, margin: "0 auto" }}>
-      <div className="itx-pill itx-pill-primary">Sobre nós</div>
-      <h1 style={{ fontFamily: "var(--display)", fontSize: 56, lineHeight: 1.05, margin: "12px 0 24px", fontWeight: 600, textWrap: "balance" }}>Há 18 anos a transformar percursos profissionais em Lisboa.</h1>
-      <p style={{ fontSize: 18, color: "var(--ink-2)", lineHeight: 1.6, maxWidth: 720, textWrap: "pretty" }}>Fundada em 2008, a Intellectus nasceu da convicção de que a formação contínua é o motor mais forte de mudança nas vidas das pessoas — e a alavanca mais subaproveitada nas empresas.</p>
-      <div className="itx-img" style={{ backgroundImage: `url(${TEAM_IMG})`, height: 360, borderRadius: 16, margin: "32px 0" }}/>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, padding: "32px 0" }}>
-        {[["Missão", "Formar profissionais com competências reais, validadas pelo mercado de trabalho."], ["Método", "Turmas pequenas, formadores ativos no seu setor e exercícios baseados em casos reais."], ["Compromisso", "94% dos alunos recomendam-nos. Garantia de assistência pós-curso durante 6 meses."]].map(([t, d]) => (
-          <div key={t}><h4 style={{ fontFamily: "var(--display)", fontSize: 22, fontWeight: 600, margin: "0 0 8px", color: "var(--primary)" }}>{t}</h4><p style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.6, margin: 0 }}>{d}</p></div>
-        ))}
+
+    {/* ── Hero block ── */}
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "64px 40px 0" }}>
+
+      {/* Split header: large title left / description right */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "end", marginBottom: 40 }}>
+        <div>
+          <span className="itx-pill itx-pill-primary" style={{ marginBottom: 16, display: "inline-flex" }}>Quem somos</span>
+          <h1 style={{ fontFamily: "var(--display)", fontSize: 52, lineHeight: 1.06, fontWeight: 700, margin: "12px 0 0", textWrap: "balance", color: "var(--ink)" }}>
+            Apresentação<br/>Institucional da<br/>Intellectus
+          </h1>
+        </div>
+        <div style={{ paddingBottom: 6 }}>
+          <p style={{ fontSize: 17, color: "var(--ink-2)", lineHeight: 1.7, margin: "0 0 20px", textWrap: "pretty" }}>
+            A Intellectus é um centro de formação técnica e profissional dedicado ao desenvolvimento de competências aplicadas, orientadas para a prática e alinhadas com as exigências legais e técnicas dos diferentes setores de atividade.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--ink-2)", lineHeight: 1.7, margin: 0, textWrap: "pretty" }}>
+            Desenvolvemos soluções formativas flexíveis para profissionais e entidades — presenciais, online e híbridas — desde 2008.
+          </p>
+        </div>
       </div>
-      <h2 style={{ fontFamily: "var(--display)", fontSize: 36, margin: "40px 0 20px", fontWeight: 600 }}>Equipa</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
-        {[["Helena Marques", "Diretora pedagógica"], ["Rui Andrade", "Coord. Tecnologia"], ["Cláudia Sousa", "Coord. Línguas"], ["André Dias", "Coord. Gestão"]].map(([n, r]) => (
-          <div key={n}>
-            <div className="itx-img" style={{ backgroundImage: `url(${TESTIMONIAL_IMG})`, aspectRatio: "1", borderRadius: 12 }}/>
-            <div style={{ marginTop: 10, fontFamily: "var(--display)", fontSize: 18 }}>{n}</div>
-            <div style={{ fontSize: 12, color: "var(--ink-3)" }}>{r}</div>
+
+      {/* Wide image with stat overlay */}
+      <div style={{ position: "relative", borderRadius: 24, overflow: "hidden" }}>
+        <div className="itx-img" style={{
+          backgroundImage: `url(${U("1552664730-d307ca884978", 1400)})`,
+          height: 420,
+        }}/>
+
+        {/* Dark green stat card — top right, overlaid on image */}
+        <div style={{
+          position: "absolute", top: 24, right: 24,
+          background: "var(--primary)",
+          borderRadius: 18, padding: "20px 28px",
+          display: "flex", gap: 0, alignItems: "stretch",
+          boxShadow: "var(--sh-3)"
+        }}>
+          {[
+            { num: "+2.400", label: "Alunos\nformados" },
+            { num: "+60",    label: "Cursos\nno catálogo" },
+          ].map(({ num, label }, i) => (
+            <div key={num} style={{
+              display: "flex", flexDirection: "column", alignItems: "flex-start",
+              paddingRight: i === 0 ? 28 : 0,
+              paddingLeft:  i === 1 ? 28 : 0,
+              borderLeft: i === 1 ? "1px solid rgba(255,255,255,.25)" : "none"
+            }}>
+              <span style={{ fontFamily: "var(--display)", fontSize: 34, fontWeight: 800, color: "white", lineHeight: 1 }}>{num}</span>
+              <span style={{ fontSize: 12, color: "rgba(255,255,255,.72)", marginTop: 5, lineHeight: 1.4, whiteSpace: "pre-line" }}>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* ── Missão / Visão / Valores ── */}
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 40px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+        {MVV.map(({ icon, title, text }) => (
+          <div key={title} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {/* Icon circle */}
+            <div style={{
+              width: 44, height: 44, borderRadius: 12,
+              background: "var(--primary-soft)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0
+            }}>
+              <Icon name={icon} size={20} color="var(--primary)" strokeWidth={1.8}/>
+            </div>
+            <div>
+              <h4 style={{ fontFamily: "var(--display)", fontSize: 20, fontWeight: 700, margin: "0 0 8px", color: "var(--ink)" }}>{title}</h4>
+              <p style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.7, margin: 0 }}>{text}</p>
+            </div>
           </div>
         ))}
       </div>
     </div>
+
+    {/* ── Equipa ── */}
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px 72px" }}>
+      <h2 style={{ fontFamily: "var(--display)", fontSize: 34, margin: "0 0 24px", fontWeight: 700 }}>Equipa</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
+        {[["Helena Marques", "Diretora pedagógica"], ["Rui Andrade", "Coord. Tecnologia"], ["Cláudia Sousa", "Coord. Línguas"], ["André Dias", "Coord. Gestão"]].map(([n, r]) => (
+          <div key={n}>
+            <div className="itx-img" style={{ backgroundImage: `url(${TESTIMONIAL_IMG})`, aspectRatio: "1", borderRadius: 14 }}/>
+            <div style={{ marginTop: 10, fontFamily: "var(--display)", fontSize: 17, fontWeight: 600 }}>{n}</div>
+            <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{r}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
     <SiteFooter />
   </div></div>
 );
