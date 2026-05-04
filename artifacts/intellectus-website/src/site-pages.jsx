@@ -367,7 +367,7 @@ const About = ({ onNav }) => (
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px 72px" }}>
       <h2 style={{ fontFamily: "var(--display)", fontSize: 34, margin: "0 0 24px", fontWeight: 700 }}>Equipa</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
-        {[["Helena Marques", "Diretora pedagógica"], ["Rui Andrade", "Coord. Tecnologia"], ["Cláudia Sousa", "Coord. Línguas"], ["André Dias", "Coord. Gestão"]].map(([n, r]) => (
+        {[["Sérgio Marques", "Diretor pedagógico"], ["Rui Andrade", "Coord. Tecnologia"], ["Cláudia Sousa", "Coord. Línguas"], ["André Dias", "Coord. Gestão"]].map(([n, r]) => (
           <div key={n}>
             <div className="itx-img" style={{ backgroundImage: `url(${TESTIMONIAL_IMG})`, aspectRatio: "1", borderRadius: 14 }}/>
             <div style={{ marginTop: 10, fontFamily: "var(--display)", fontSize: 17, fontWeight: 600 }}>{n}</div>
