@@ -1,4 +1,7 @@
 // Catalog (with filters), course detail, checkout, about, blog, contact
+import React from 'react';
+import { COURSES, AREAS, FORMATS, POSTS, Icon, fmtEUR, U, TEAM_IMG, TESTIMONIAL_IMG } from './data.jsx';
+import { SiteNav, SiteFooter, CourseCard } from './site-shared.jsx';
 
 const Catalog = ({ onNav, onAdd }) => {
   const [area, setArea] = React.useState("Todas");
@@ -352,4 +355,4 @@ const Contact = ({ onNav }) => (
   </div></div>
 );
 
-Object.assign(window, { Catalog, CourseDetail, Checkout, About, Blog, Contact });
+export { Catalog, CourseDetail, Checkout, About, Blog, Contact };

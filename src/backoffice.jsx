@@ -1,4 +1,6 @@
 // Backoffice — login, dashboard, courses, enrollments, payments, reports, CMS
+import React from 'react';
+import { COURSES, ENROLLMENTS, Icon, fmtEUR, HERO_IMG_ALT } from './data.jsx';
 
 const BoSidebar = ({ active, onNav }) => (
   <div className="bo-side">
@@ -421,4 +423,4 @@ const BoCMS = ({ onNav }) => (
   </div></div>
 );
 
-Object.assign(window, { BoLogin, BoDash, BoCourses, BoCourseEdit, BoEnroll, BoPay, BoReports, BoCMS });
+export { BoLogin, BoDash, BoCourses, BoCourseEdit, BoEnroll, BoPay, BoReports, BoCMS };

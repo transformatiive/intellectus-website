@@ -1,4 +1,6 @@
 // Three homepage variants — distinct hero treatments
+import { COURSES, AREAS, Icon, HERO_IMG, HERO_IMG_ALT } from './data.jsx';
+import { SiteNav, SiteFooter, CourseCard } from './site-shared.jsx';
 
 const HomeA = ({ onNav, onAdd }) => (
   <div className="itx-page">
@@ -153,4 +155,4 @@ const HomeC = ({ onNav, onAdd }) => (
   </div>
 );
 
-Object.assign(window, { HomeA, HomeB, HomeC });
+export { HomeA, HomeB, HomeC };

@@ -1,4 +1,5 @@
 // Public site — shared chrome (nav, footer) + course card variants
+import { Icon, fmtEUR } from './data.jsx';
 
 const SiteNav = ({ active = "home", onNav }) => (
   <div className="itx-nav">
@@ -112,4 +113,4 @@ const CourseCard = ({ course, variant = "v1", onAdd, onOpen }) => {
   );
 };
 
-Object.assign(window, { SiteNav, SiteFooter, CourseCard });
+export { SiteNav, SiteFooter, CourseCard };
