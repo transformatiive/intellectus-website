@@ -72,7 +72,7 @@ const Catalog = ({ onNav, onAdd }) => {
           </div>
           {/* Results */}
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, paddingTop: 21 }}>
               <select className="itx-select" style={{ width: 200 }}><option>Mais relevantes</option><option>Menor preço</option><option>Maior preço</option><option>Avaliação</option></select>
               <div style={{ display: "flex", gap: 4, padding: 3, background: "white", border: "1px solid var(--line-2)", borderRadius: 8 }}>
                 <button onClick={() => setView("grid")} className="itx-btn itx-btn-sm" style={{ background: view === "grid" ? "var(--paper-3)" : "transparent", border: "none" }}><Icon name="grid" size={14}/></button>
